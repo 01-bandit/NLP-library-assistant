@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Library Assistant</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="app-shell">
+		<header class="app-header">
+			<div class="brand">
+				<span class="brand-mark" aria-hidden="true">📚</span>
+				<div>
+					<h1>Library Assistant</h1>
+					<p>University library desk</p>
+				</div>
+			</div>
+			<div class="header-actions">
+				<span class="status" id="status" data-state="connecting">
+					<span class="status-dot" aria-hidden="true"></span>
+					<span id="status-text">Connecting</span>
+				</span>
+				<button class="button button-secondary" id="new-chat" type="button">New chat</button>
+			</div>
+		</header>
+
+		<section class="chat-area" id="chat-messages" aria-live="polite" aria-label="Conversation">
+			<div class="welcome-message">
+				<span class="welcome-icon" aria-hidden="true">✦</span>
+				<h2>How can I help?</h2>
+				<p>Ask about our catalogue or borrowing policies.</p>
+			</div>
+		</section>
+
+		<form class="composer" id="chat-form">
+			<label class="sr-only" for="message-input">Message the library assistant</label>
+			<textarea id="message-input" rows="1" placeholder="Ask about books or library policies..." autocomplete="off"></textarea>
+			<button class="button button-primary" id="send-button" type="submit" disabled>Send</button>
+		</form>
+		<p class="disclaimer">Fictional catalogue · The assistant cannot change library accounts</p>
+	</main>
+	<script src="app.js"></script>
+</body>
+</html>
