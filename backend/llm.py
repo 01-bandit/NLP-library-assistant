@@ -17,6 +17,8 @@ class LLMEngine:
 			"model": self.model,
 			"messages": messages,
 			"stream": True,
+			# Must match CONTEXT_WINDOW_TOKENS in conversation.py.
+			"options": {"num_ctx": 4096, "temperature": 0.1},
 		}
 
 		try:

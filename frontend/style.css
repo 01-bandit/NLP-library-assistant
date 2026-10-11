@@ -335,3 +335,11 @@ h1 {
 		padding: 0 14px 11px;
 	}
 }
+
+.sources {
+	margin-top: 8px;
+	padding-top: 6px;
+	border-top: 1px dashed var(--line);
+	font-size: 12px;
+	opacity: 0.75;
+}

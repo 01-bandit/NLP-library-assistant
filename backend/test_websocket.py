@@ -4,9 +4,10 @@ import json
 import websockets
 
 
-async def receive_response(socket) -> None:
+async def receive_response(socket) -> list[str]:
 	has_token = False
 	has_done = False
+	sources = []
 
 	while not has_done:
 		message = json.loads(await socket.recv())
@@ -16,11 +17,13 @@ async def receive_response(socket) -> None:
 			has_token = True
 		elif message.get("type") == "done":
 			has_done = True
+			sources = message.get("sources", [])
 		elif message.get("type") == "error":
 			raise RuntimeError(message.get("message", "Unknown server error"))
 
 	if not has_token:
 		raise RuntimeError("The server returned no token messages.")
+	return sources
 
 
 async def main() -> None:
@@ -35,22 +38,24 @@ async def main() -> None:
 				json.dumps(
 					{
 						"session_id": session_id,
-						"message": "What books are available?",
+						"message": "How much is the late fine for a standard book?",
 					}
 				)
 			)
-			await receive_response(socket)
+			if "fines-and-fees.md" not in await receive_response(socket):
+				raise RuntimeError("Expected fines-and-fees.md in the sources.")
 
 			print("\nSending second message...")
 			await socket.send(
 				json.dumps(
 					{
 						"session_id": session_id,
-						"message": "Who wrote Clean Code?",
+						"message": "Can I pay it online?",
 					}
 				)
 			)
-			await receive_response(socket)
+			if "paying-fines.md" not in await receive_response(socket):
+				raise RuntimeError("Expected paying-fines.md in the follow-up sources.")
 
 		print("\nTest completed")
 	except Exception as error:

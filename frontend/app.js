@@ -46,6 +46,12 @@ function connect() {
 			currentAssistantMessage.textContent += data.content;
 			scrollToBottom();
 		} else if (data.type === "done") {
+			if (currentAssistantMessage && data.sources?.length) {
+				const sources = document.createElement("div");
+				sources.className = "sources";
+				sources.textContent = `Sources: ${data.sources.join(", ")}`;
+				currentAssistantMessage.appendChild(sources);
+			}
 			isGenerating = false;
 			currentAssistantMessage = null;
 			updateSendButton();
